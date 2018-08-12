@@ -1,4 +1,4 @@
-## Validity Sensor `138a:0097` libfprint driver
+## Validity Sensor `138a:009d` libfprint driver
 #### A linux driver for 2017 ThinkPad's fingerprint readers
 
 Requires to have the fingers enrolled (for example, in Windows).

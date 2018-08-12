@@ -1576,10 +1576,11 @@ static void finger_image_download_ssm(struct fpi_ssm *ssm)
 		break;
 
 
-	case CHECK_DB:
+	case CHECK_DB_1:
+	case CHECK_DB_2:
 		async_data_exchange(idev, DATA_EXCHANGE_ENCRYPTED,
-		                    VERIFY_SEQUENCE.msg,
-		                    VERIFY_SEQUENCE.msg_length,
+		                    VERIFY_SEQUENCES[ssm->cur_state - CHECK_DB_1].msg,
+		                    VERIFY_SEQUENCES[ssm->cur_state - CHECK_DB_1].msg_length,
 		                    vdev->buffer,
 		                    1024,
 		                    verify_callback1,
@@ -2067,6 +2068,7 @@ static void dev_close(struct fp_img_dev *idev)
 static const struct usb_id id_table[] = {
 	{.vendor = 0x138a,.product = 0x0090},
 	{.vendor = 0x138a,.product = 0x0097},
+	{.vendor = 0x138a,.product = 0x009d},
 	{0, 0, 0,},
 };
 

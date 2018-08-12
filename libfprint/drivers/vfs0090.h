@@ -114,7 +114,8 @@ enum IMAGE_DOWNLOAD_STATES {
 	IMAGE_DOWNLOAD_STATE_1,
 	IMAGE_DOWNLOAD_STATE_2,
 	IMAGE_DOWNLOAD_STATE_3,
-	CHECK_DB,
+	CHECK_DB_1,
+	CHECK_DB_2,
 	CHECK_DB_RESULT,
 	IMAGE_DOWNLOAD_STATE_SUBMIT,
 	IMAGE_DOWNLOAD_STATE_GREEN_LED_BLINK,
@@ -166,6 +167,16 @@ const unsigned char TEST_SEED[] = "VirtualBox\0" "0";
 static const unsigned char VERIFY_SEQUENCE_MSG1[] = {
 	0x5e, 0x02, 0xff, 0x03, 0x00, 0x05, 0x00, 0x01,
 	0x00, 0x00, 0x00, 0x00, 0x00
+};
+static const unsigned char STG_WINDSOR_MSG[] = {
+	0x4b, 0x00, 0x00, 0x0b, 0x00, 0x53, 0x74, 0x67,
+	0x57, 0x69, 0x6e, 0x64, 0x73, 0x6f, 0x72, 0x00
+};
+static const unsigned char STG_WINDSOR_RSP[] = {
+	0x00, 0x00, 0x03, 0x00, 0x01, 0x00, 0x0b, 0x00,
+	0x00, 0x00, 0x05, 0x00, 0x4c, 0x00, 0x53, 0x74,
+	0x67, 0x57, 0x69, 0x6e, 0x64, 0x73, 0x6f, 0x72,
+	0x00
 };
 static const unsigned char INIT_SEQUENCE_MSG1[] = { 0x01 };
 
@@ -274,7 +285,7 @@ static const struct data_exchange_t INIT_SEQUENCES[] = {
 		.msg = INIT_SEQUENCE_MSG3,
 		.msg_length = G_N_ELEMENTS(INIT_SEQUENCE_MSG3),
 		.rsp = NULL,
-		.rsp_length = 84,
+		.rsp_length = -1,
 	},
 	{
 		.msg = INIT_SEQUENCE_MSG4,
@@ -295,14 +306,20 @@ static const struct data_exchange_t INIT_SEQUENCES[] = {
 		.rsp_length = -1,
 	},
 };
-static const struct data_exchange_t VERIFY_SEQUENCE =
+static const struct data_exchange_t VERIFY_SEQUENCES[] = {
 	{
 		.msg = VERIFY_SEQUENCE_MSG1,
 		.msg_length = G_N_ELEMENTS(VERIFY_SEQUENCE_MSG1),
 		.rsp = NULL,
 		.rsp_length = -1 /* 38 normally */,
+	},
+	{
+		.msg = STG_WINDSOR_MSG,
+		.msg_length = G_N_ELEMENTS(STG_WINDSOR_MSG),
+		.rsp = STG_WINDSOR_RSP,
+		.rsp_length = G_N_ELEMENTS(STG_WINDSOR_RSP),
 	}
-;
+};
 
 static const unsigned char PRE_KEY[] = {
 	0x71, 0x7c, 0xd7, 0x2d, 0x09, 0x62, 0xbc, 0x4a,
@@ -676,13 +693,13 @@ static const struct data_exchange_t ACTIVATE_SEQUENCES[] = {
 		.msg = ACTIVATE_SEQUENCE_MSG67,
 		.msg_length = G_N_ELEMENTS(ACTIVATE_SEQUENCE_MSG67),
 		.rsp = NULL,
-		.rsp_length = 84,
+		.rsp_length = -1,
 	},
 	{
 		.msg = ACTIVATE_SEQUENCE_MSG67,
 		.msg_length = G_N_ELEMENTS(ACTIVATE_SEQUENCE_MSG67),
 		.rsp = NULL,
-		.rsp_length = 84,
+		.rsp_length = -1,
 	},
 	{
 		.msg = SCAN_MATRIX,
