@@ -1539,10 +1539,11 @@ static void verify_callback2(struct fp_img_dev *idev, int status, void *data)
                                              vdev->buffer_length);
         if (interrupt_type == VFS_SCAN_AUTHENTICATED) {
             idev->action_result = FP_VERIFY_MATCH;
-		} else {
-			idev->action_result = FP_VERIFY_NO_MATCH;
+            fpi_ssm_jump_to_state(ssm, IMAGE_DOWNLOAD_STATE_GREEN_LED_BLINK);
+        } else {
+            idev->action_result = FP_VERIFY_NO_MATCH;
+            fpi_ssm_jump_to_state(ssm, IMAGE_DOWNLOAD_STATE_RED_LED_BLINK);
         }
-        fpi_ssm_mark_completed(ssm);
         fpi_imgdev_report_finger_status(idev, FALSE);
     } else if (status == LIBUSB_TRANSFER_CANCELLED) {
         fpi_ssm_mark_completed(ssm);
